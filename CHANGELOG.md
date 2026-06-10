@@ -1,13 +1,17 @@
 # [Unreleased]
+<!-- [未发布] -->
 
 ## Features
+<!-- 功能 -->
 - Server-side map clustering and zoom-aware polyline filtering: The world map now performs trail clustering on the server to improve performance. At lower zoom levels, smaller trails are clustered, while at higher zoom levels the largest routes in the current view are shown as detailed polylines. The maximum number of simultaneously visible polylines can be configured via the PUBLIC_MAP_MAX_POLYLINES environment variable.
 
 # v0.19.2
 ## Documentation
+<!-- 文档 -->
 -  Add CONTRIBUTING guidelines
   
 ## Bug Fixes
+<!-- 错误修复 -->
 - All photos from strava activities are now synced, instead of just the first one
 - Shared trails are now displayed correctly in search results
 - Fixes bug that caused trails to be indexed multiple times causing high server load
@@ -17,12 +21,15 @@
 # v0.19.1
 
 ## Features
+<!-- 功能 -->
 - Speed improvements for various database queries
 
 ## Security
+<!-- 安全 -->
 - Remote lists, remote trails, and remote trail comments now respect the visibility settings and shares of the respective list or trail. (PR #980)
 
 ## Bug Fixes
+<!-- 错误修复 -->
 - Federated remote trails now sync tags and create missing local tags when needed. (PR #987)
 - Private profiles no longer prevent access to a user's own trails; inaccessible private profiles now return a proper `404`. (PR #986)
 - Comment access rules now correctly check the linked comment author via `author.user`. (PR #984)
@@ -30,6 +37,7 @@
 # v0.19.0
 
 ## Breaking Changes
+<!-- 破坏性更改 -->
 - Bulk uploads no longer use `UPLOAD_USER` / `UPLOAD_PASSWORD` authentication. Uploads now require an API token; files must be placed in a subfolder of the upload directory named after the respective API token. For more information checkout the [documentation](https://wanderer.to/use/import-export/) (PR #886).
 - Bulk uploads now run via a file watcher rather than on a cron schedule. Files placed in the upload folder while the container is not running will not be processed automatically. (PR #886)
 - External service URLs have been moved from public frontend variables to server-side variables: `VALHALLA_URL`, `NOMINATIM_URL`, `OVERPASS_API_URL`. The old `PUBLIC_*` variables remain as a fallback but should be migrated. (PR #697)
@@ -38,11 +46,13 @@
 - OpenAPI documentation is now generated from annotations and served as JSON (the YAML endpoint has been removed). (PR #927)
 
 ## Security
+<!-- 安全 -->
 - HTML content in descriptions, comments, summit logs, waypoints, and profile bios is now sanitised on the server to reduce the risk of cross-site scripting (XSS). Some custom HTML may be stripped on save. (PR #930)
 - Anonymous user API endpoints have been removed. This only affects third-party applications that accessed user data without authentication. Regular users and the standard UI are unaffected. (PR #927)
 - Additional CSRF/SSRF protections and rate limiting have been implemented for ActivityPub and outbound network calls. (PR #930)
 
 ## Features
+<!-- 功能 -->
 - Hammerhead integration added, including synchronisation of planned and completed tours, and manual trail sending. (PR #628)
 - The federation has been significantly expanded and refactored to provide more robust remote content synchronisation and local caching for remote trails and lists. (PR #930)
 - Trails can now be explicitly marked as completed. (PR #920)
@@ -60,6 +70,7 @@
 - API tokens have been added so that external tools and automations can interact with Wanderer. (PR #848)
 
 ## Bug Fixes
+<!-- 错误修复 -->
 - Fixed broken WebFinger requests. (PR #966)
 - Theme detection fixed via corrected `color-scheme` query selector. (PR #957, thanks @mfortini)
 - Hillshading visibility on the map has been fixed. (PR #942)
@@ -75,17 +86,22 @@
 - Fixed search endpoints returning invalid errors in some failure cases. (PR #961, thanks @palhaland)
 
 ## Translation
+<!-- 翻译 -->
 - The Norwegian translations have been updated. (PR #931, thanks @palhaland)
 
 ## Maintenance
+<!-- 维护 -->
 - Meilisearch, PocketBase, Go, web/docs dependencies, CI actions, and Docker build setup updated.
 
 # v0.18.5
 ## Security
+<!-- 安全 -->
 - Fixes CVE-2022-39299 via xmldom upgrade (PR #820)
 ## Features
+<!-- 功能 -->
 - Persist trail list filter settings in local storage: filters are preserved on reload and when navigating back from a trail, and reset when - leaving the trail list (PR #814)
 ## Bug Fixes
+<!-- 错误修复 -->
 - Skip elevation correction when Valhalla returns invalid (null) elevation data; original GPX values are preserved (PR #821)
 - Improved threshold handling for high-frequency GPX tracks to ensure correct ascent/descent calculation (PR #813)
 - Fixes trail upload for new users without default privacy settings (PR #785)
@@ -98,13 +114,16 @@
 - Fixes race condition in map plugin that caused errors when printing a trail (PR #827)
 
 ## Translation
+<!-- 翻译 -->
 - Added Czech language support (thanks @Sheepa) (PR #774)
 
 ## Dependencies
+<!-- 依赖 -->
 - Updated most dependencies, including security and maintenance updates
 
 # v0.18.4
 ## Bug fixes
+<!-- 错误修复 -->
 - Tags can now properly be removed from trails
 - Creating more than 29 lists does no longer prevent lists from loading
 - Fixes a bug that caused the GPS data to be removed from summit logs after editing
@@ -114,29 +133,35 @@
 - Fixes imported tracks being marked private despite public-by-default settings
 
 ## Features
+<!-- 功能 -->
 - Trails can now be added to multiple lists at once
 - ActivityPub: External user access now requires authentication (401)
   
 ## Translation
+<!-- 翻译 -->
 -  Adds Norwegian translation (thanks @palhaland)
 
 # v0.18.3
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes bug that prevented waypoints from being update or deleted in v0.18.2
 - Return properly formatted error message when accessing a protected API route
 - Fixes logo for OIDC 2 & 3 providers (thanks @wolffshots)
 - Fixes bug that caused dropdown actions from a feed item on the homepage to cause a 404 error
 
 ## Maintenance
+<!-- 维护 -->
 - Updates pocketbase to v0.30.0
 
 # v0.18.2
 ## Features
+<!-- 功能 -->
 - Adds `dedup` command to pocketbase. This command allows an admin to quickly identify duplicate trails and delete them. Use the `--dry-run` flag to only log duplicate trails without deleting them. To execute the command run `docker exec -it wanderer-db ./pocketbase dedup --dry-run`.
 - Adds option to only sync strava activities after a certain date
 - Singificant performance improvements for instances with larger userbases
 - Greatly improved initial indexing speed when starting wanderer
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes permission issues for public trails
 - Fixes bug that caused trails to be duplicated multiple times (to clean up see the `dedup` command above)
 - Fixes link to "New Trail" from empty profiles
@@ -146,19 +171,23 @@
 
 # v0.18.1
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes permission issues that prevented federation from working properly
 - Trail categories are properly displayed in lists
 - Fixes issue that prevented lists from saving
 
 ## Documentation
+<!-- 文档 -->
 - Improves docs for updating on bare-metal installations
 
 ## Translation
+<!-- 翻译 -->
 - Adds Basque and Russian translations (thanks @aisaivia & @jeffscrum)
 
 # v0.18.0
 
 ## Features
+<!-- 功能 -->
 - Adds feed on homepage for logged in users
 - Adds customizable "About" section to the homepage (read [here](https://wanderer.to/run/frontend-configuration/about) to learn more)
 - New Maps: OpenHikingMap, CyclOSM
@@ -178,6 +207,7 @@ To display the previews for each track on the world map, wanderer computes encod
 - Trail category is now displayed in search results
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Custom categories with spaces are now handled correctly
 - Avoid reuploading all trails when updating a list
 - Fixes build dependencies for building from source (thanks @slothful-vassal)
@@ -185,6 +215,7 @@ To display the previews for each track on the world map, wanderer computes encod
 - Reset pagination when updating filters
 
 ## Thanks
+<!-- 致谢 -->
 
 A big thanks goes to @cugu for doing a lot of GitHub house keeping and submitting various, helpful PRs while I was gone!
 Another big shoutout has to go to @vcoppe and [gpx.studio](https://github.com/gpxstudio/gpx.studio). Their code was a huge help implementing the various map overlays and GPX editing functionality that was added in this patch.
@@ -192,6 +223,7 @@ Another big shoutout has to go to @vcoppe and [gpx.studio](https://github.com/gp
 
 # v0.17.2
 ## Features
+<!-- 功能 -->
 - Trails in the map view can now be sorted
 - Adds ogp metadata tags for SEO
 - Public profiles are now accessible by anonymous users
@@ -199,6 +231,7 @@ Another big shoutout has to go to @vcoppe and [gpx.studio](https://github.com/gp
 - Adds localization for the calendar component (thanks @james-geiger)
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Waypoint descriptions are now properly formatted
 - The summit log table on the statistics page shows data again
 - Fixes bug that caused lists to disappear when having more than 5 lists
@@ -211,12 +244,14 @@ Another big shoutout has to go to @vcoppe and [gpx.studio](https://github.com/gp
 # v0.17.1
 
 ## Features
+<!-- 功能 -->
 
 - Adds batch actions for trails. You can now select multiple trails from the list and add them to a list, for example. Big thanks to @slothful-vassal for the PR
 - If a trail has more than two tags they are now toggleable on trail cards for less visual clutter. Thank to @briannelson95 for the PR
 - The wanderer.to homepage now contains a dedicated "Servers" section where public instances are listed
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Searching for a trail on the homepage does no longer result in 404
 - An actor's username and preferred username are no longer switched
 - Accesing your own private profile no longer throws an error
@@ -232,33 +267,41 @@ Another big shoutout has to go to @vcoppe and [gpx.studio](https://github.com/gp
 
 # v0.17.0
 > [!CAUTION]
+> 此版本包含破坏性更改。标记为 ⚠️ 的项目。
+> **请先更新到 v0.16.5 版本，再更新到 v0.17.0。**
 This release contains breaking changes. They are marked with a ⚠️.  
 **Please update to version v0.16.5 first before updating to v0.17.0.**
 
 ## Configuration
+<!-- 配置 -->
 Check the reopsitory's [`docker-compose.yml`](https://github.com/open-wanderer/wanderer/blob/main/docker-compose.yml) for a valid configuration.
 
 - ⚠️ The PocketBase environment variable `POCKETBASE_ENCRYPTION_KEY` is now required. It requires a valid 32 character AES key as its value. To generate a key, run `openssl rand -hex 16`.
 - ⚠️ The PocketBase environment variable `ORIGIN`is now required. It must be set to the public IP or hostname (including the port) of your wanderer frontend and must equal the value set for the frontend's `ORIGIN` environment variable.
 
 ## Features
+<!-- 功能 -->
 - Adds federation
 - Adds rich text editor for descriptions and comments
   
 ## Docs
+<!-- 文档 -->
 - Adds documentation for federation
 - Restructures the documentation in three distinct parts (for users, admins & developers) for better separation of concerns
 
 ## Translation
+<!-- 翻译 -->
 - New language: Russian (thanks @jeffscrum)
 
 # v0.16.5
 
 ## Features
+<!-- 功能 -->
 - Further performance improvements when showing large amount of trails on the map
 - Elevations are now recalculated when importing trails leading to improved elevation gain/loss calculation
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Tags are now properly displayed for trails on the front page
 - Direct links to a list now properly load the trails in the list
 - Fixes bug that caused trails with waypoints being rejected by the upload API
@@ -267,6 +310,7 @@ Check the reopsitory's [`docker-compose.yml`](https://github.com/open-wanderer/w
   
 # v0.16.4
 ## Security
+<!-- 安全 -->
 > [!CAUTION]
 Fixes a critical vulnerability where, in rare cases, registered users could temporarily inherit another user's session. This was caused by an incorrectly scoped PocketBase instance being shared across concurrent requests on the server.
 
@@ -283,21 +327,25 @@ Action Required:
 
 # v0.16.3
 ## Features
+<!-- 功能 -->
 - Adds option to add waypoints directly by uploading photos with EXIF data
 - Performance improvemtents when loading acitivities
 - Major performance improvements when displaying multiple tracks on the map
 - Adds ENV variables to configure pocketbase SMTP settings
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes untranslated trail difficulty in table view
 - Fixes wrong file extension when exporting trails on mobile
 - Completed tours synced from komoot are now also marked as completed in wanderer
   
 ## Docs
+<!-- 文档 -->
 - Updates ENV variables section to reflect changes mentioned above
 
 # v0.16.2
 ## Features
+<!-- 功能 -->
 - Adds various settings for route calculations
 - Trails with no photos will now have an autogenerated route preview as the thumbnail
 - Pressing "M" in the map view will hide the trail
@@ -306,6 +354,7 @@ Action Required:
 - If SMTP settings are present, new users will be asked to confirm their email address
   
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes bug that prevented totals from getting updated when creating a new route
 - Comments in GPX files are now ignored when importing from the client side
 - Fixes issue that prevented oAuth registered users from saving their settings
@@ -313,6 +362,7 @@ Action Required:
 - The stats page now correctly shows more than 30 activities
 
 ## Docs
+<!-- 文档 -->
 - Fixes allowed values for trail difficulty in API reference
 - Fixes env var descriptions
 - Updates oAuth docs to reflect changes in PocketBase
@@ -320,10 +370,12 @@ Action Required:
 
 # v0.16.1
 ## Features
+<!-- 功能 -->
 - Trail filter settings are now saved when you visit a trail and come back
 - Trail descriptions can now be up to 10000 characters long
   
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes error in the KML file parser
 - Fixes error that caused trails to disappear from the map when switching styles
 - Fixes route point numbering when deleting in-between route points
@@ -333,24 +385,30 @@ Action Required:
 - strava activities with no or empty GPS data are now ignored (thanks @dyuri)
 
 ## Docs
+<!-- 文档 -->
 - Multiple updates by the community to increase clarity and update outdated info (thanks @huggenknubbel, @Kami)
 
 # v0.16.0
 > [!CAUTION]
+> 此版本包含破坏性更改。必要的迁移将自动进行。
+> **请先更新到 v0.15.2 版本，再更新到 v0.16.0。**
 This release contains breaking changes. The necessary migrations will happen automatically.
 **Please update to version v0.15.2 first before updating to v0.16.0.**
 
 ## Maintenance
+<!-- 维护 -->
 - Updates to PocketBase v0.26.1
 - Bumps required go version to >= 1.23.0
 
 ## Features
+<!-- 功能 -->
 - Introduces tags for trails
 - Adds support for KMZ files
 - Waypoints can now be created by clicking on the map when creating a new trail
 - Adds support for videos
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes map trail bounding box to include public and shared trails
 - Fixes bug that caused orphan waypoints and summit logs
 - The default language is now set correctly after registering
@@ -364,9 +422,11 @@ This release contains breaking changes. The necessary migrations will happen aut
 
 # v0.15.2
 ## Features
+<!-- 功能 -->
 - Password fields now have a hint if you surpass the maximum password length (72)
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes bug that prevented strava activities with heartrate data being imported
 - Fixes bug that prevented users from creating new summit logs
 - Fixes unclear error messages when saving integrations
@@ -375,10 +435,12 @@ This release contains breaking changes. The necessary migrations will happen aut
 
 # v0.15.1
 ## Features
+<!-- 功能 -->
 - You can now choose to sync only completed or planned tours from komoot
 - Toast messages now stack
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes bug that prevented the komoot integration from toggling on
 - Fixes bug that caused orphaned summit logs
 - Fixes bug that prevented users from saving an updated trail
@@ -386,6 +448,7 @@ This release contains breaking changes. The necessary migrations will happen aut
 
 # v0.15.0
 ## Features
+<!-- 功能 -->
 - Integrations: you can now sync your strava and komoot trails directly with wanderer. [Learn more](https://wanderer.to/guides/integrations/).
 - Updates the trail details view to give a clearer idea of the trail's course
 - Improved trail import dialog
@@ -395,6 +458,7 @@ This release contains breaking changes. The necessary migrations will happen aut
 - Improves calculation of total elevation gain and loss by apllying a smoothing function (thanks @gri38)
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes a bug that caused batch import jobs to fail if a filename contained a comma
 - Fixes trail card height issues
 - Fixes bug that caused some trails to be hidden from the list view
@@ -402,17 +466,21 @@ This release contains breaking changes. The necessary migrations will happen aut
   
 # v0.14.0
 > [!IMPORTANT]
+> 此版本引入了重大更新，包括前端迁移到 Svelte 5。
 > This release introduces significant updates, including the migration of the frontend to [Svelte 5](https://svelte.dev/blog/svelte-5-is-alive). While the migration has been rigorously tested, there is a possibility that some features may not function as expected. We encourage you to report any issues you encounter. Additionally, the location search functionality has been transitioned from a locally hosted meilisearch index to nominatim. This upgrade offers substantially improved location search capabilities within wanderer. As a result, the custom meilisearch docker image (`flomp/wanderer-search`) is now deprecated. You can safely replace it with the official meilisearch image (`getmeili/meilisearch:v1.11.3`) in your `docker-compose.yml`.
 
 ## Maintenance
+<!-- 维护 -->
 - Migrates to Svelte 5
 - Removes the cities500 index from meilisearch
 
 ## Features
+<!-- 功能 -->
 - Switches location search to nominatim
 - Lists are now fuzzy searchable from the searchbar on the frontpage, in the map view and in the list view
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes a bug that caused new users to not be able to save their settings
 - The default language is now set to the browser language after registering a new user
 - Moves the user biography out of the auth cookie to decrease cookie size
@@ -420,9 +488,11 @@ This release contains breaking changes. The necessary migrations will happen aut
 # v0.13.2
 
 ## Security
+<!-- 安全 -->
 - Fixes potential XSS attack vector in waypoint and summit log map popups
 
 ## Features
+<!-- 功能 -->
 -  Adds page loading bar
 -  Improves route editor interface
 -  Adds location search to trail create and edit form
@@ -430,6 +500,7 @@ This release contains breaking changes. The necessary migrations will happen aut
 -  Updates max. photo size for waypoints, summit logs and trails to 20MB
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes bug that caused new users to not be redirected after registering
 - Fixes bug that caused map coordinates to not wrap properly
 - Fixes bug that caused new users to not be able to create lists
@@ -438,24 +509,29 @@ This release contains breaking changes. The necessary migrations will happen aut
 - Deleting an account now properly cascade deltes all associated objects from the database
 
 ## Translations
+<!-- 翻译 -->
 - New translation: Spanish (thanks to @xccose)
 - Updated translations (thanks to all contributors)
 
 # v0.13.1
 
 ## Features
+<!-- 功能 -->
 - Improves loading speed of the home page
 - Improves server side rendering of certain components
 
 ## Translations
+<!-- 翻译 -->
 - Various additions across multiple languages (thanks to all contributors)
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes a bug that hid the map on some sites on mobile devices
 - Fixes responsive layouts on mobile devices
 
 # v0.13.0
 ## Features
+<!-- 功能 -->
 - Adds a profile page with timeline, trails and stats of the respective user
 - Adds notifications (on the website and via email) for various events (e.g. a new comment on your trail). Notifications can be toggled in the settings.
 - You can now follow other users
@@ -472,22 +548,27 @@ This release contains breaking changes. The necessary migrations will happen aut
   - uniform empty states
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes bug that caused trails to not be displayed for new users
 - Fixes various bugs related to improper API data validation
 
 ## Docs
+<!-- 文档 -->
 - Improves and updates API reference
 - Improves clarity of "From source installation" guide
 
 # v0.12.0
 > [!CAUTION]
+> 此版本包含破坏性更改。大部分迁移将自动进行，但有两处需要你手动操作。
 This release contains breaking changes. Most migrations will happen automatically, but you will need to take action in two places that will be clearly marked ⚠️ further down.
 
 ## Maintenance
+<!-- 维护 -->
 - Updates to meilisearch version 0.11.3. 
 - ⚠️ meilisearch indices are not compatible across minor versions. This means you will need to rename or delete your [`data.ms`](https://github.com/open-wanderer/wanderer/blob/8635de78b9f1510e2316b08e605b175a2615f4db/docker-compose.yml#L19) folder on your host system to force meilisearch to rebuild the index on the next start (note that this can take a little while). 
 
 ## Features
+<!-- 功能 -->
 - Adds password reset email function for users (see [docs](https://wanderer.to/guides/authentication/#forgot-your-password) for more info)
 - You can now add photos to your summit logs
 - Complete rewrite of the map logic switching from raster to vector tiles
@@ -498,6 +579,7 @@ This release contains breaking changes. Most migrations will happen automaticall
 - Adds loading animations for trail lists
 
 ## Bug fixes
+<!-- 错误修复 -->
 
 - Fixes bug that caused a new trail to be created instead of updated when uploading a new GPS data source to an existing trail
 - Fixes bug that caused trails to throw a 404 error when they had summit logs created before v0.11.0
@@ -505,10 +587,12 @@ This release contains breaking changes. Most migrations will happen automaticall
 - Fixes issue with GPX export when using Google Chrome (thanks [@tofublock](https://github.com/tofublock))
 
 ## Miscellaneous
+<!-- 其他 -->
 As the number of contributors to this project continues to grow (which I’m very happy about), I’ve set up a [Discord channel](https://discord.gg/MdpybUHc) for more direct communication. If you’re interested in helping with wanderer, feel free to join!
 
 # v0.11.0
 ## Features
+<!-- 功能 -->
 - Other user's profiles can now be viewed
 - The summit log author is now listed in the summit log table
 - The trail author is now listed for every trail
@@ -517,15 +601,18 @@ As the number of contributors to this project continues to grow (which I’m ver
 - Updated 3D Model on front page
   
 ## Bug fixes
+<!-- 错误修复 -->
 - Waypoints and summit logs of shared trails are now properly displayed
 - Fixes missing translation for trail categories
 - Fixes events in profile calendar
 
 # v0.10.1
 ## Features
+<!-- 功能 -->
 - Adds elevation loss to trails. Please note that trails created before this version will have a default elevation loss of 0. Edit & save to update.
   
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes bug that caused auto-added summit logs to not have distance, durtaion etc.
 - Fixes error in the auto-upload feature
 - Fixes access permissions for profile page
@@ -534,6 +621,7 @@ As the number of contributors to this project continues to grow (which I’m ver
   
 # v0.10.0
 ## Features
+<!-- 功能 -->
 - A new summit log entry is now added automatically when uploading a new GPX file for a new or existing trail
 - GPX files can now be attached to summit logs
 - Adds a new profile page with filterable statistics derived from summit log GPX data
@@ -541,11 +629,13 @@ As the number of contributors to this project continues to grow (which I’m ver
   
 # v0.9.0
 ## Features
+<!-- 功能 -->
 - Complete visual overhaul of the list page
 - Lists can now be shared with other users
 - Updates visual style for waypoints
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes a bug that caused categories not to load properly on page reload
 - Fixes icon picker suggestions for waypoints
 - Fixes a bug that would prevent public and shared trails from showing up in the overview
@@ -553,19 +643,23 @@ As the number of contributors to this project continues to grow (which I’m ver
 
 # v0.8.2
 ## Features
+<!-- 功能 -->
 - The pagination is now available at top and bottom
 - HEIC image format is now supported
 - Exporting only a trail without summit logs or photos will create a single file instead of a ZIP folder
 - The current page is now remembered when navigating back to the trail overview
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes map height when viewing a trail in detail view
 
 # v0.8.1
 ## Features
+<!-- 功能 -->
 - Public and shared trails can now be exported and printed
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Correctly adds the xmlns header to exported GPX files
 - Fixes detail view for shared and public trails
 - Fixes bug that caused the default category to be re-applied when editing a trail
@@ -573,6 +667,7 @@ As the number of contributors to this project continues to grow (which I’m ver
 
 # v0.8.0
 ## Features
+<!-- 功能 -->
 - The settings page layout got a complete visual overhaul
 - You can now change your email and password from the web UI
 - You can import GPX, KML, TCX, and FIT files directly through the UI or using the API
@@ -580,18 +675,22 @@ As the number of contributors to this project continues to grow (which I’m ver
 - Additional custom map tile sets can now be added via the settings page
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Added multiple missing translations
 - The hotline metric selector icons are now radio buttons instead of checkboxes
 
 
 # v0.7.3
 ## Features
+<!-- 功能 -->
 - Adds support for FIT files
   
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes display issue for the filter panel in the map view
 
 ## Translations
+<!-- 翻译 -->
 - adds Italian translation (thanks to [lukasitaly](https://github.com/lukasitaly))
   
 ## Bug fixes
@@ -600,31 +699,37 @@ As the number of contributors to this project continues to grow (which I’m ver
 
 # v0.7.2
 ## Bug fixes
+<!-- 错误修复 -->
 - Icons in dropdown menus are now displaying properly again
 - The trail id is now returned when using the upload API endpoint
 
 # v0.7.1
 ## Features
+<!-- 功能 -->
 - A warning is now displayed if the ORIGIN environment variable is misconfigured
   
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes login for http connections
 - Trails are now properly sorted across all pages
 
 # v0.7.0
 ## Features
+<!-- 功能 -->
 - Trail sort and sort direction are now remembered through a page reload
 - You can now pick between OpenStreetMaps and OpenTopoMaps tiles
 - The gradient track line can now display altitude, slope, and speed
 - A waypoint's coordinates can now be inferred from a photo's EXIF data
 
 ## Docs
+<!-- 文档 -->
 
 - Added a guide for custom categories
 
 
 # v0.6.1
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes a bug that would show wrong comments under a trail
 - Fixes an overflow issue in list views
 - Settings are now created properly when signing up with OAuth
@@ -632,18 +737,22 @@ As the number of contributors to this project continues to grow (which I’m ver
 
 # v0.6.0
 ## Features
+<!-- 功能 -->
 - You can now share trails with other users by selecting "Share" from the trail contextmenu. You can set the permission level as "View" or "Edit".
 - Adds missing translations
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes a bug that prevented comments from showing up
 - GPX files without a name in the metadata section will now receive a generic name when uploaded through the API
 
 # v0.5.1
 ## Features
+<!-- 功能 -->
 - You can now export trails as GPX or GEOJson files. Optionally you can include photos and summit book entries of the trail. This replaces the "Download GPX" function in previous versions.
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes a bug that would prevent users from creating multiple summit log entries without reloading the page
 - wanderer now takes the `<rte>` tag into account when displaying a trail on the map
 - A trail's date attribute is now the current date by default
@@ -651,18 +760,22 @@ As the number of contributors to this project continues to grow (which I’m ver
 # v0.5.0
 
 ## ⚠️ Breaking changes ⚠️
+<!-- ⚠️ 破坏性更改 ⚠️ -->
 - This version updates the index pattern of the meilisearch index. Please delete your `data.ms` folder before launching wanderer. The indices will be rebuilt on launch. Otherwise trail filtering will no longer work.
 
 ## Features
+<!-- 功能 -->
 - Trails can now be filtered by date
 - Elevation, slope and speed graphs are now also visible when creating a new trail
 - When creating a new trail you now have the option to create a new route from scratch without uploading a GPX file. Press the "Draw a route" button and plan your new route directly in wanderer. We use [valhalla](https://github.com/valhalla/valhalla) and their associated free [hosted service](https://gis-ops.com/global-open-valhalla-server-online/) to calculate the routes. To activate the feature make sure to set the PUBLIC_VALHALLA_URL environment variable on you wanderer-web service. See the current [docker-compose.yml](https://github.com/open-wanderer/wanderer/blob/main/docker-compose.yml) for a working configuration.
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Uploaded trails will now have a date if it can be parsed from the file
 
 # v0.4.0
 ## Features
+<!-- 功能 -->
 
 - Trails can now be printed to PDF. Select "Print" from the menu when viewing a trail.
 - Trails can now have a date.
@@ -670,39 +783,47 @@ As the number of contributors to this project continues to grow (which I’m ver
 - Adds a setting to focus the map on all trails instead of a specific location
 
 ## Bug fixes
+<!-- 错误修复 -->
 - Fixes a bug that would show a wrong date for summit logs for certain time zones (now really)
 - Fixes a bug that prevented waypoints from showing up in public trails
 
 # v0.3.2
 ## Bug fixes
+<!-- 错误修复 -->
 
 - Fixes a bug that caused a 500 Internal Error to appear when viewing trails without an account
 
 ## Translations
+<!-- 翻译 -->
 
 - improves Dutch translation (thanks to [Vistaus](https://github.com/Vistaus))
 
 
 # v0.3.1
 ## Features
+<!-- 功能 -->
 
 - Max values for elevation gain and distance filters are now dynamically calculated based on your longest trail
 - Disabling username/email & password auth in PocketBase is now reflected in wanderer's login UI
 
 ## Bug fixes
+<!-- 错误修复 -->
 
 - Fixes a bug that prevented import trails from appearing in map view
 
 ## Translations
+<!-- 翻译 -->
 
 - adds Simplified Chinese translation (thanks to [icyleaf](https://github.com/icyleaf))
 
 ## Dependencies
+<!-- 依赖 -->
 
 - updates PocketBase to v0.22.7
 
 # v0.3.0
 ## Features
+<!-- 功能 -->
 
 - Trails can now be added to a list while editing or creating a trail. The trail must be saved at least once to add it to a list.
 - wanderer now has an auto-upload folder. GPX files in this folder will be autmatically uploaded and converted to a trail. Read the [docs](https://github.com/open-wanderer/wanderer/wiki/API#auto-upload-folder) for more information.
@@ -710,22 +831,26 @@ As the number of contributors to this project continues to grow (which I’m ver
 - added OAuth support. Read [here](https://github.com/open-wanderer/wanderer/wiki/OAuth) how to enable providers.
   
 ## Bug fixes
+<!-- 错误修复 -->
 
 - Fixes a bug that would show a wrong date for summit logs for certain time zones
 - added client side validation for usernames
 
 ## Translations
+<!-- 翻译 -->
 - adds French translation (thanks to [seb2020](https://github.com/seb2020))
 - adds Hungarian translation (thanks to [sszemtelen](https://github.com/sszemtelen))
 
 
 # v0.2.1
 ## Bug fixes
+<!-- 错误修复 -->
 
 - summit book dates now show in the correct format for the current locale
 - Fixes a bug that would overwrite trail names and descriptions when editing a trail
 
 ## Translations
+<!-- 翻译 -->
 
 - adds Dutch translation (thanks to [yves-bonami](https://github.com/yves-bonami))
 - adds Polish translation (thanks to [ludrol](https://github.com/ludrol))
@@ -733,6 +858,7 @@ As the number of contributors to this project continues to grow (which I’m ver
 
 # v0.2.0
 ## Features
+<!-- 功能 -->
 
 - when creating/editing a trail you can now drag & drop photos into the photo section to upload them
 - you can now attach photos to waypoints
@@ -746,11 +872,13 @@ As the number of contributors to this project continues to grow (which I’m ver
 > Note: for city states to show up in your search you have to delete your data.ms folder if you already have a previous installation of wanderer. The indices will then be rebuilt on startup.
 
 ## Docs
+<!-- 文档 -->
 
 -  added complete API documentation
 
 # v0.1.1
 ## Bug fixes
+<!-- 错误修复 -->
 
 - Fixes a bug that would prevent trails longer than 20km from being displayed
 - added BODY_SIZE_LIMIT env variable to docker compose to allow for bigger file uploads
@@ -760,8 +888,10 @@ As the number of contributors to this project continues to grow (which I’m ver
 - the default location field now sets the value correctly after clicking on a search result
   
 ## Docs
+<!-- 文档 -->
 
 - updated the docs to include BODY_SIZE_LIMIT
 
 # v0.1.0 
 - Initial release
+<!-- 初始版本 -->

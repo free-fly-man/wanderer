@@ -1,12 +1,17 @@
 ---
 title: Environment configuration
+# 环境配置
 description: How to configure <span class="-tracking-[0.075em]">wanderer</span> with environment variables
+# 如何使用环境变量配置 wanderer
 ---
 
 Global settings for <span class="-tracking-[0.075em]">wanderer</span> can be adjusted via environment variables. If you deployed <span class="-tracking-[0.075em]">wanderer</span> with docker you can change the environment variables directly in the `docker-compose.yaml`. If you deployed <span class="-tracking-[0.075em]">wanderer</span> on bare-metal you can change the environment variables in the launch script.
+<!-- wanderer 的全局设置可以通过环境变量调整。如果你使用 docker 部署 wanderer，可以直接在 `docker-compose.yaml` 中更改环境变量。如果你在裸机上部署 wanderer，可以在启动脚本中更改环境变量。 -->
 
 ## Common
+<!-- 通用 -->
 These variables are shared between all three services.
+<!-- 这些变量在三个服务之间共享。 -->
 
 | Environment Variable | Description                                                      | Default                                     |
 | -------------------- | ---------------------------------------------------------------- | ------------------------------------------- |
@@ -14,13 +19,16 @@ These variables are shared between all three services.
 | MEILI_MASTER_KEY     | Master API key for your meilisearch instance                     | vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo |
 
 ## Meilisearch
+<!-- Meilisearch -->
 Since we use an unmodified installation of meilisearch you can use all variables listed in meilisearch's documentation. You can find a full list over [here](https://www.meilisearch.com/docs/learn/configuration/instance_options).
+<!-- 由于我们使用未修改的 meilisearch 安装，你可以使用 meilisearch 文档中列出的所有变量。你可以在[这里](https://www.meilisearch.com/docs/learn/configuration/instance_options)找到完整列表。 -->
 
 | Environment Variable | Description                   | Default |
 | -------------------- | ----------------------------- | ------- |
 | MEILI_NO_ANALYTICS   | Disable meilisearch telemetry | true    |
 
 ## Pocketbase
+<!-- Pocketbase -->
 | Environment Variable          | Description                                                                                                       | Default               |
 | ----------------------------- | ----------------------------------------------------------------------------------------------------------------- | --------------------- |
 | ORIGIN                        | Public IP or hostname (including the port) of your <span class="-tracking-[0.075em]">wanderer</span> frontend (must be the same as in the frontend config) | http://localhost:3000 |
@@ -35,6 +43,7 @@ Since we use an unmodified installation of meilisearch you can use all variables
 | POCKETBASE_SMTP_PASSWORD      | The password used to authenticate with the SMTP server                                                            |                       |
 
 ## Frontend
+<!-- 前端 -->
 
 | Environment Variable    | Description                                                                      | Default                             |
 | ----------------------- | -------------------------------------------------------------------------------- | ----------------------------------- |
@@ -49,8 +58,10 @@ Since we use an unmodified installation of meilisearch you can use all variables
 | UPLOAD_PASSWORD         | Password for the account with which <span class="-tracking-[0.075em]">wanderer</span> auto-uploads trails                 |                                     |
 
 ## Geocoding & Routing
+<!-- 地理编码和路线规划 -->
 
 These variables configure server-side requests to Valhalla, Nominatim and Overpass.
+<!-- 这些变量配置对 Valhalla、Nominatim 和 Overpass 的服务器端请求。 -->
 
 | Environment Variable     | Description                                                                 | Default                             |
 | ------------------------ | --------------------------------------------------------------------------- | ----------------------------------- |
@@ -59,10 +70,13 @@ These variables configure server-side requests to Valhalla, Nominatim and Overpa
 | OVERPASS_API_URL | Overpass API URL used for map points of interest                | https://overpass-api.de             |
 
 When `*_URL` is unset, the backend falls back to legacy `PUBLIC_*_URL`.
+<!-- 当 `*_URL` 未设置时，后端将回退到旧的 `PUBLIC_*_URL`。 -->
 
 ## Custom CA certificates
+<!-- 自定义 CA 证书 -->
 
 If your API endpoints use certificates signed by a private CA, add the CA bundle and set `NODE_EXTRA_CA_CERTS` for the `web` service.
+<!-- 如果你的 API 端点使用由私有 CA 签名的证书，请添加 CA 包并为 `web` 服务设置 `NODE_EXTRA_CA_CERTS`。 -->
 
 | Environment Variable | Description                                                              | Default |
 | -------------------- | ------------------------------------------------------------------------ | ------- |

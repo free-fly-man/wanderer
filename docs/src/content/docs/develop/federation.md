@@ -1,15 +1,21 @@
 ---
 title: Federation
+# 联邦化
 description: Technical documentation of federation in wanderer
+# wanderer 中联邦化的技术文档
 ---
 
 wanderer is a federated trail-sharing platform built on ActivityPub. It enables users to publish trails, follow other explorers across instances, and interact with content such as comments, lists, and summit logs. All user-generated content in wanderer—whether it's a trail, a list, a comment, or a summit log—is modeled as a `Note` object in ActivityPub, adhering to a consistent structure for federation.
+<!-- wanderer 是一个基于 ActivityPub 构建的联邦化路线分享平台。它使用户能够发布路线、跨实例关注其他探险者，并与评论、列表和登顶日志等内容互动。wanderer 中所有用户生成的内容——无论是路线、列表、评论还是登顶日志——都被建模为 ActivityPub 中的 `Note` 对象，遵循一致的联邦化结构。 -->
 
 This technical documentation provides a detailed overview of how federation works in wanderer, including the types of objects exchanged, the structure of those objects, and how interactions such as mentions, likes, and follows are processed across instances.
+<!-- 本技术文档详细概述了联邦化在 wanderer 中的工作原理，包括交换的对象类型、这些对象的结构，以及提及、点赞和关注等互动是如何跨实例处理的。 -->
 
-Below, you’ll find examples of the different JSON representations used in federated communication. These illustrate how <span class="-tracking-[0.075em]">wanderer</span> encodes and interprets core actions and content as standardized `Note` objects.
+Below, you'll find examples of the different JSON representations used in federated communication. These illustrate how <span class="-tracking-[0.075em]">wanderer</span> encodes and interprets core actions and content as standardized `Note` objects.
+<!-- 在下面，你可以找到联邦化通信中使用的不同 JSON 表示形式的示例。这些展示了 wanderer 如何将核心操作和内容编码和解释为标准化的 `Note` 对象。 -->
 
 ## Context
+<!-- 上下文 -->
 
 ```json
 "@context":[
@@ -17,11 +23,15 @@ Below, you’ll find examples of the different JSON representations used in fede
 ]
 ```
 The context is identical for all activities and objects.
+<!-- 所有活动和对象的上下文都是相同的。 -->
 
 ## Actors
+<!-- 参与者 -->
 An actor represents a user of <span class="-tracking-[0.075em]">wanderer</span> in a federated context.
+<!-- 参与者代表联邦化上下文中 wanderer 的用户。 -->
 
 ### Person
+<!-- 人物 -->
 
 ```json
 {
@@ -49,8 +59,10 @@ An actor represents a user of <span class="-tracking-[0.075em]">wanderer</span> 
 ```
 
 ### Outbox
+<!-- 发件箱 -->
 
 Paginated outbox of an actor.
+<!-- 参与者的分页发件箱。 -->
 
 ```json
 {
@@ -94,8 +106,10 @@ Paginated outbox of an actor.
 ```
 
 ### Followers
+<!-- 关注者 -->
 
 Paginated collection of followers of an actor.
+<!-- 参与者的关注者的分页集合。 -->
 
 ```json
 {
@@ -112,8 +126,10 @@ Paginated collection of followers of an actor.
 ```
 
 ### Following
+<!-- 关注中 -->
 
 Paginated collection of actors being followed by an actor.
+<!-- 参与者关注中的参与者的分页集合。 -->
 
 ```json
 {
@@ -130,13 +146,17 @@ Paginated collection of actors being followed by an actor.
 ```
 
 ## Objects
+<!-- 对象 -->
 
 ### Trail
+<!-- 路线 -->
 
 Represents a trail with various metadata like description, photos, elevation data etc. 
+<!-- 表示具有各种元数据（如描述、照片、高程数据等）的路线。 -->
 
 :::note
 Waypoints, comments and summit logs are not part of a federated trail object. They are instead fetched on demand from the source instance when requesting a trail.
+<!-- 航点、评论和登顶日志不是联邦化路线对象的一部分。它们在请求路线时根据需要从源实例获取。 -->
 :::
 
 ```json
@@ -214,8 +234,10 @@ Waypoints, comments and summit logs are not part of a federated trail object. Th
 ```
 
 ### Summit log
+<!-- 登顶日志 -->
 
 Represents a summit log that is attached to a trail. The trail is referenced in the "InReplyTo" field. It contains very similar metadata to a trail object.
+<!-- 表示附加在路线上的登顶日志。路线在“InReplyTo”字段中引用。它包含与路线对象非常相似的元数据。 -->
 
 ```json
 {
@@ -271,8 +293,10 @@ Represents a summit log that is attached to a trail. The trail is referenced in 
 ```
 
 ### Comment
+<!-- 评论 -->
 
 A comment attached to a trail. The trail is referenced in the "InReplyTo" field. Contains only text.
+<!-- 附加在路线上的评论。路线在“InReplyTo”字段中引用。仅包含文本。 -->
 
 ```json
 {
@@ -294,8 +318,10 @@ A comment attached to a trail. The trail is referenced in the "InReplyTo" field.
 ```
 
 ### List
+<!-- 列表 -->
 
 A collection of trails.
+<!-- 路线的集合。 -->
 
 ```json
 {
@@ -317,10 +343,13 @@ A collection of trails.
 ```
 
 ## Activities
+<!-- 活动 -->
 
 ### Create or Update trail
+<!-- 创建或更新路线 -->
 
 Issued whenever a trail is created or updated. Broadcasted to all followers and all mentions. Editing a previously created trail will broadcast an identical activity, except the `type` being `Update`. The `object` is a [Trail](#trail).
+<!-- 每当创建或更新路线时发出。广播给所有关注者和所有提及。编辑先前创建的路线将广播相同的活动，只是 `type` 为 `Update`。`object` 是一个 [Trail](#trail)。 -->
 
 ```json
 {
@@ -340,8 +369,10 @@ Issued whenever a trail is created or updated. Broadcasted to all followers and 
 ```
 
 ### Create or Update summit log
+<!-- 创建或更新登顶日志 -->
 
 Issued whenever a summit log is created or updated. Broadcasted to the trail author, the author's followers and all mentions. Editing a previously created summit log will broadcast an identical activity, except the `type` being `Update`. The `object` is a [Summit Log](#summit-log).
+<!-- 每当创建或更新登顶日志时发出。广播给路线作者、作者的关注者和所有提及。编辑先前创建的登顶日志将广播相同的活动，只是 `type` 为 `Update`。`object` 是一个 [Summit Log](#summit-log)。 -->
 
 ```json
 {
@@ -359,8 +390,10 @@ Issued whenever a summit log is created or updated. Broadcasted to the trail aut
 ```
 
 ### Create or Update comment
+<!-- 创建或更新评论 -->
 
 Issued whenever a comment is created or updated. Broadcasted to the trail's author and all mentions. Editing a previously created comment will broadcast an identical activity, except the `type` being `Update`. The `object` is a [Comment](#comment).
+<!-- 每当创建或更新评论时发出。广播给路线作者和所有提及。编辑先前创建的评论将广播相同的活动，只是 `type` 为 `Update`。`object` 是一个 [Comment](#comment)。 -->
 
 ```json
 {
@@ -381,8 +414,10 @@ Issued whenever a comment is created or updated. Broadcasted to the trail's auth
 
 
 ### Create or Update list
+<!-- 创建或更新列表 -->
 
 Issued whenever a list is created or updated. Broadcasted to all followers. Editing a previously created list will broadcast an identical activity, except the `type` being `Update`. The `object` is a [List](#list).
+<!-- 每当创建或更新列表时发出。广播给所有关注者。编辑先前创建的列表将广播相同的活动，只是 `type` 为 `Update`。`object` 是一个 [List](#list)。 -->
 
 ```json
 {
@@ -401,8 +436,10 @@ Issued whenever a list is created or updated. Broadcasted to all followers. Edit
 ```
 
 ### Follow user
+<!-- 关注用户 -->
 
 Each actor in <span class="-tracking-[0.075em]">wanderer</span> can be followed. The actor being followed will immediately send back an `Accept` activity. Future public trails and lists published by the actor being followed will be broadcasted to the following actors inbox.
+<!-- wanderer 中的每个参与者都可以被关注。被关注的参与者将立即发回一个 `Accept` 活动。被关注的参与者未来发布的公开路线和列表将广播到关注者的收件箱。 -->
 
 ```json
 {
@@ -417,8 +454,10 @@ Each actor in <span class="-tracking-[0.075em]">wanderer</span> can be followed.
 ```
 
 ### Accept follow
+<!-- 接受关注 -->
 
 Automatically send by an actor as a response upon receiving a `Follow` activity.
+<!-- 由参与者自动发送，作为收到 `Follow` 活动后的响应。 -->
 
 ```json
 {
@@ -438,8 +477,10 @@ Automatically send by an actor as a response upon receiving a `Follow` activity.
 ```
 
 ### Undo follow
+<!-- 取消关注 -->
 
 An unfollow is represented by an `Undo` activity with the original follow as its `object`.
+<!-- 取消关注由一个 `Undo` 活动表示，其 `object` 为原始关注。 -->
 
 ```json
 {
@@ -459,8 +500,10 @@ An unfollow is represented by an `Undo` activity with the original follow as its
 ```
 
 ### Like trail
+<!-- 点赞路线 -->
 
 A like for a trail.
+<!-- 对路线的点赞。 -->
 
 ```json
 {
@@ -475,8 +518,10 @@ A like for a trail.
 ```
 
 ### Undo like trail
+<!-- 取消点赞路线 -->
 
 Removing a like from a previously liked trail. 
+<!-- 取消对先前点赞的路线的点赞。 -->
 
 ```json
 {
