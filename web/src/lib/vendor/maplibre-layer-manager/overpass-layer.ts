@@ -152,11 +152,14 @@ export class OverpassLayer implements BaseLayer {
     }
 
     private async fetchTile(x: number, y: number, activeQueries: string[], bounds: LngLatBounds) {
-        const q = this.getOverpassQuery(activeQueries, bounds)
-        if (!q.length) {
-            return;
-        }
-        const r = await fetch(`${this.overpassApiURL}?data=${q}`)
+        // 使用高德 POI 搜索替代 Overpass QL 查询
+        const centerLat = (bounds.getSouth() + bounds.getNorth()) / 2;
+        const centerLon = (bounds.getWest() + bounds.getEast()) / 2;
+        // 根据瓦片大小计算搜索半径（米），约 1° ≈ 111km
+        const radius = Math.round((bounds.getNorth() - bounds.getSouth()) / 2 * 111000);
+        const types = activeQueries.join(",");
+        const url = `${this.overpassApiURL}?lat=${centerLat.toFixed(6)}&lon=${centerLon.toFixed(6)}&types=${encodeURIComponent(types)}&radius=${radius}`;
+        const r = await fetch(url);
         const response: OverpassResponse = await r.json();
 
         this.cacheData(x, y, response, activeQueries)

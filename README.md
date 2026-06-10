@@ -35,6 +35,8 @@ wanderer is a self-hosted trail database. You can upload your recorded tracks or
 <!-- 高级筛选和搜索功能 -->
 - Create custom lists to organize your trails further
 <!-- 创建自定义列表来进一步整理你的路线 -->
+- OAuth2 login support (Google, GitHub, WeChat, and more)
+<!-- OAuth2 登录支持（Google、GitHub、微信等） -->
 
 
 ## Getting started

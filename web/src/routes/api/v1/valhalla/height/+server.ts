@@ -1,14 +1,12 @@
-import { getValhallaBaseUrl } from '$lib/server/valhalla';
-import { proxyJsonResponse } from '$lib/server/http';
+import { amapHeightRequest } from '$lib/server/valhalla';
 import { json, type RequestEvent } from "@sveltejs/kit";
-
 
 /**
  * @swagger
  * /api/v1/valhalla/height:
  *   post:
  *     summary: Get elevation data
- *     description: Queries Valhalla service for elevation data at coordinates
+ *     description: Queries Amap (高德) elevation service, returns Valhalla-compatible response
  *     tags:
  *       - Valhalla
  *     requestBody:
@@ -19,7 +17,7 @@ import { json, type RequestEvent } from "@sveltejs/kit";
  *             type: object
  *     responses:
  *       200:
- *         description: Elevation data from Valhalla
+ *         description: Elevation data (Valhalla-compatible format)
  *         content:
  *           application/json:
  *             schema:
@@ -30,15 +28,12 @@ import { json, type RequestEvent } from "@sveltejs/kit";
  *         description: Internal Server Error
  */
 export async function POST(event: RequestEvent) {
-    const baseUrl = getValhallaBaseUrl();
-    const data = await event.request.json()
-    if (!baseUrl) {
-        return json({ message: "VALHALLA_URL not set" }, { status: 400 })
-    }
     try {
-        const response = await event.fetch(baseUrl + '/height', { method: "POST", body: JSON.stringify(data) });
-        return await proxyJsonResponse(response);
-    } catch (e: any) {
-        return json({ message: "Valhalla request failed" }, { status: 502 })
+        const data = await event.request.json();
+        const result = await amapHeightRequest(data.encoded_polyline);
+        return json(result);
+    } catch (error: any) {
+        console.error("Elevation request failed", error);
+        return json({ message: "Elevation request failed", detail: error?.message }, { status: 502 });
     }
 }

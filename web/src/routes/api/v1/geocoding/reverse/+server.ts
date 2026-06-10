@@ -1,6 +1,5 @@
 import { json, type RequestEvent } from "@sveltejs/kit";
-import { proxyJsonResponse } from "$lib/server/http";
-import { fetchNominatim } from "$lib/server/nominatim";
+import { fetchGeocodingReverse } from "$lib/server/nominatim";
 
 export async function GET(event: RequestEvent) {
     const lat = event.url.searchParams.get("lat");
@@ -13,16 +12,10 @@ export async function GET(event: RequestEvent) {
         return json({ message: "Invalid query parameter: lat or lon" }, { status: 400 });
     }
 
-    const params = new URLSearchParams({
-        lat,
-        lon,
-        format: "geojson",
-        addressdetails: "1",
-    });
-
     try {
-        const response = await fetchNominatim(event, "/reverse", params);
-        return await proxyJsonResponse(response);
+        const response = await fetchGeocodingReverse(event, Number(lat), Number(lon));
+        const payload = await response.json();
+        return json(payload);
     } catch (error) {
         const err = error instanceof Error ? error : new Error(String(error));
         const detail = {
@@ -30,7 +23,7 @@ export async function GET(event: RequestEvent) {
             message: err.message,
             cause: err.cause instanceof Error ? err.cause.message : err.cause,
         };
-        console.error("Nominatim reverse request failed", detail);
-        return json({ message: "Nominatim request failed", detail }, { status: 502 });
+        console.error("Geocoding reverse request failed", detail);
+        return json({ message: "Geocoding request failed", detail }, { status: 502 });
     }
 }

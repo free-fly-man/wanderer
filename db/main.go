@@ -16,6 +16,7 @@ import (
 	"pocketbase/commands"
 	"pocketbase/hooks"
 	"pocketbase/integrations/hammerhead"
+	"pocketbase/integrations/joyrun"
 	"pocketbase/integrations/komoot"
 	"pocketbase/integrations/strava"
 	"pocketbase/routes"
@@ -173,6 +174,9 @@ func registerRoutes(se *core.ServeEvent, client meilisearch.ServiceManager) {
 	se.Router.POST("/integration/hammerhead/upload", routes.IntegrationHammerheadUpload)
 	se.Router.GET("/integration/hammerhead/login", routes.IntegrationHammerheadLogin)
 	se.Router.GET("/integration/komoot/login", routes.IntegrationKommotLogin)
+	se.Router.GET("/integration/joyrun/login", routes.IntegrationJoyrunLogin)
+	se.Router.GET("/integration/wechat/login", routes.IntegrationWechatLogin)
+	se.Router.GET("/integration/wechat/callback", routes.IntegrationWechatCallback)
 
 	se.Router.POST("/activitypub/activity/process", routes.ActivitypubActivityProcess)
 	se.Router.GET("/activitypub/actor", routes.ActivitypubActor)
@@ -211,6 +215,12 @@ func registerCronJobs(app core.App, client meilisearch.ServiceManager) {
 		err = hammerhead.SyncHammerhead(app, client)
 		if err != nil {
 			warning := fmt.Sprintf("Error syncing with hammerhead: %v", err)
+			fmt.Println(warning)
+			app.Logger().Error(warning)
+		}
+		err = joyrun.SyncJoyrun(app, client)
+		if err != nil {
+			warning := fmt.Sprintf("Error syncing with joyrun: %v", err)
 			fmt.Println(warning)
 			app.Logger().Error(warning)
 		}

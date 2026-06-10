@@ -32,6 +32,9 @@ FROM golang:1.25.0@sha256:5502b0e56fca23feba76dbc5387ba59c593c02ccc2f0f7355871ea
 
 WORKDIR /app
 
+# 国内构建加速：Go modules 使用七牛云代理
+ENV GOPROXY=https://goproxy.cn,direct
+
 COPY . .
 
 RUN go mod download

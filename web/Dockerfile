@@ -4,6 +4,9 @@ WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 
+# 国内构建加速：npm 使用淘宝镜像源
+RUN npm config set registry https://registry.npmmirror.com
+
 RUN npm ci
 
 COPY . .

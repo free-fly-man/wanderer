@@ -44,166 +44,86 @@ export interface BaseLayer {
 }
 
 export const baseMapStyles: Record<string, string | StyleSpecification> = {
-    "OpenFreeMap": "/styles/ofm.json",
-    "OpenTopoMap": {
+    "高德标准": {
         version: 8,
-        glyphs: "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
         sources: {
-            openTopoMap: {
-                type: 'raster',
-                tiles: ['https://tile.opentopomap.org/{z}/{x}/{y}.png'],
-                tileSize: 256,
-                maxzoom: 17,
-                attribution:
-                    '&copy; <a href="https://www.opentopomap.org" target="_blank">OpenTopoMap</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
-            },
-        },
-        layers: [
-            {
-                id: 'openTopoMap',
-                type: 'raster',
-                source: 'openTopoMap',
-            },
-        ],
-    },
-    "OpenHikingMap": {
-        version: 8,
-        glyphs: "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
-        sources: {
-            openHikingMap: {
-                type: 'raster',
-                tiles: ['https://maps.refuges.info/hiking/{z}/{x}/{y}.png'],
-                tileSize: 256,
-                maxzoom: 18,
-                attribution:
-                    '&copy; <a href="https://wiki.openstreetmap.org/wiki/Hiking/mri" target="_blank">sly</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>',
-            },
-        },
-        layers: [
-            {
-                id: 'openHikingMap',
-                type: 'raster',
-                source: 'openHikingMap',
-            },
-        ],
-    },
-    "CyclOSM": {
-        version: 8,
-        glyphs: "https://tiles.openfreemap.org/fonts/{fontstack}/{range}.pbf",
-        sources: {
-            cyclOSM: {
+            amapStandard: {
                 type: 'raster',
                 tiles: [
-                    'https://a.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
-                    'https://b.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
-                    'https://c.tile-cyclosm.openstreetmap.fr/cyclosm/{z}/{x}/{y}.png',
+                    'https://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
+                    'https://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
+                    'https://webrd03.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
+                    'https://webrd04.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=8&x={x}&y={y}&z={z}',
                 ],
                 tileSize: 256,
                 maxzoom: 18,
                 attribution:
-                    '&copy; <a href="https://github.com/cyclosm/cyclosm-cartocss-style/releases" title="CyclOSM - Open Bicycle render">CyclOSM</a> &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+                    '&copy; <a href="https://www.amap.com" target="_blank">高德地图</a>',
             },
         },
         layers: [
             {
-                id: 'cyclOSM',
+                id: 'amapStandard',
                 type: 'raster',
-                source: 'cyclOSM',
+                source: 'amapStandard',
             },
         ],
     },
-    "Carto Light": "https://basemaps.cartocdn.com/gl/positron-gl-style/style.json",
-    "Carto Dark": "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json"
+    "高德卫星": {
+        version: 8,
+        sources: {
+            amapSatellite: {
+                type: 'raster',
+                tiles: [
+                    'https://webst01.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
+                    'https://webst02.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
+                    'https://webst03.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
+                    'https://webst04.is.autonavi.com/appmaptile?style=6&x={x}&y={y}&z={z}',
+                ],
+                tileSize: 256,
+                maxzoom: 18,
+                attribution:
+                    '&copy; <a href="https://www.amap.com" target="_blank">高德地图</a>',
+            },
+        },
+        layers: [
+            {
+                id: 'amapSatellite',
+                type: 'raster',
+                source: 'amapSatellite',
+            },
+        ],
+    },
+    "高德夜间": {
+        version: 8,
+        sources: {
+            amapDark: {
+                type: 'raster',
+                tiles: [
+                    'https://webrd01.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}',
+                    'https://webrd02.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}',
+                    'https://webrd03.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}',
+                    'https://webrd04.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}',
+                ],
+                tileSize: 256,
+                maxzoom: 18,
+                attribution:
+                    '&copy; <a href="https://www.amap.com" target="_blank">高德地图</a>',
+            },
+        },
+        layers: [
+            {
+                id: 'amapDark',
+                type: 'raster',
+                source: 'amapDark',
+            },
+        ],
+    },
 }
 
-export const overlays: Record<string, StyleSpecification> = {
-    hiking: {
-        version: 8,
-        name: "waymarkedTrailsHiking",
-        sources: {
-            waymarkedTrailsHiking: {
-                type: 'raster',
-                tiles: ['https://tile.waymarkedtrails.org/hiking/{z}/{x}/{y}.png'],
-                tileSize: 256,
-                maxzoom: 18,
-                attribution:
-                    '&copy; <a href="https://www.waymarkedtrails.org" target="_blank">Waymarked Trails</a>',
-            },
-        },
-        layers: [
-            {
-                id: 'waymarkedTrailsHiking',
-                type: 'raster',
-                source: 'waymarkedTrailsHiking',
-            },
-        ],
-    },
-    cycling: {
-        version: 8,
-        name: "waymarkedTrailsCycling",
-
-        sources: {
-            waymarkedTrailsCycling: {
-                type: 'raster',
-                tiles: ['https://tile.waymarkedtrails.org/cycling/{z}/{x}/{y}.png'],
-                tileSize: 256,
-                maxzoom: 18,
-                attribution:
-                    '&copy; <a href="https://www.waymarkedtrails.org" target="_blank">Waymarked Trails</a>',
-            },
-        },
-        layers: [
-            {
-                id: 'waymarkedTrailsCycling',
-                type: 'raster',
-                source: 'waymarkedTrailsCycling',
-            },
-        ],
-    },
-    MTB: {
-        version: 8,
-        name: "waymarkedTrailsMTB",
-
-        sources: {
-            waymarkedTrailsMTB: {
-                type: 'raster',
-                tiles: ['https://tile.waymarkedtrails.org/mtb/{z}/{x}/{y}.png'],
-                tileSize: 256,
-                maxzoom: 18,
-                attribution:
-                    '&copy; <a href="https://www.waymarkedtrails.org" target="_blank">Waymarked Trails</a>',
-            },
-        },
-        layers: [
-            {
-                id: 'waymarkedTrailsMTB',
-                type: 'raster',
-                source: 'waymarkedTrailsMTB',
-            },
-        ],
-    },
-    skiing: {
-        name: "waymarkedTrailsWinter",
-        version: 8,
-        sources: {
-            waymarkedTrailsWinter: {
-                type: 'raster',
-                tiles: ['https://tile.waymarkedtrails.org/slopes/{z}/{x}/{y}.png'],
-                tileSize: 256,
-                maxzoom: 18,
-                attribution:
-                    '&copy; <a href="https://www.waymarkedtrails.org" target="_blank">Waymarked Trails</a>',
-            },
-        },
-        layers: [
-            {
-                id: 'waymarkedTrailsWinter',
-                type: 'raster',
-                source: 'waymarkedTrailsWinter',
-            },
-        ],
-    }
-}
+// 覆盖层说明：原 waymarkedtrails.org 覆盖层（徒步/骑行/山地/滑雪）在中国大陆无法访问。
+// 可通过 Settings -> Map 自定义 tileset 添加替代覆盖层，或自建 waymarkedtrails 实例。
+export const overlays: Record<string, StyleSpecification> = {}
 
 export type POI = {
     tags:
@@ -501,7 +421,7 @@ export type MapState = {
 }
 
 export const defaultMapState: MapState = {
-    base: "OpenFreeMap",
+    base: "高德标准",
     overlays: {
         hiking: false,
         cycling: false,

@@ -63,6 +63,7 @@ services:
       PUBLIC_DISABLE_SIGNUP: "false"
       UPLOAD_FOLDER: /app/uploads
       UPLOAD_USER:
+      AMAP_KEY: b5279fea2eaa266c9f3ea453811ba7e
       UPLOAD_PASSWORD:
       OVERPASS_API_URL: https://overpass-api.de
       VALHALLA_URL: https://valhalla1.openstreetmap.de

@@ -1,17 +1,12 @@
-import { getValhallaBaseUrl } from '$lib/server/valhalla';
-import { proxyJsonResponse } from '$lib/server/http';
+import { amapRouteRequest } from '$lib/server/valhalla';
 import { json, type RequestEvent } from "@sveltejs/kit";
-
-type RouteRequestBody = Record<string, unknown> & {
-    include_elevation_profile?: boolean;
-};
 
 /**
  * @swagger
  * /api/v1/valhalla/route:
  *   post:
  *     summary: Get route data
- *     description: Queries Valhalla service for routing data
+ *     description: Queries Amap (高德) route planning service, returns Valhalla-compatible response
  *     tags:
  *       - Valhalla
  *     requestBody:
@@ -22,7 +17,7 @@ type RouteRequestBody = Record<string, unknown> & {
  *             type: object
  *     responses:
  *       200:
- *         description: Route data from Valhalla
+ *         description: Route data (Valhalla-compatible format)
  *         content:
  *           application/json:
  *             schema:
@@ -33,19 +28,12 @@ type RouteRequestBody = Record<string, unknown> & {
  *         description: Internal Server Error
  */
 export async function POST(event: RequestEvent) {
-    const baseUrl = getValhallaBaseUrl();
-    const data: RouteRequestBody = await event.request.json();
-    if (!baseUrl) {
-        return json({ message: "VALHALLA_URL not set" }, { status: 400 })
-    }
-
     try {
-        const response = await event.fetch(baseUrl + '/route', {
-            method: "POST",
-            body: JSON.stringify(data)
-        });
-        return await proxyJsonResponse(response);
-    } catch (e: any) {
-        return json({ message: "Valhalla request failed" }, { status: 502 })
+        const data = await event.request.json();
+        const result = await amapRouteRequest(data);
+        return json(result);
+    } catch (error: any) {
+        console.error("Route planning failed", error);
+        return json({ message: "Route planning failed", detail: error?.message }, { status: 502 });
     }
 }
