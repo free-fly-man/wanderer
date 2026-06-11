@@ -29,7 +29,7 @@ func IntegrationWechatLogin(e *core.RequestEvent) error {
 
 	state := security.RandomString(32)
 
-	config := wechat.WechatConfig{
+	config := wechat.WeChatConfig{
 		AppID: appID,
 	}
 
@@ -78,7 +78,7 @@ func IntegrationWechatCallback(e *core.RequestEvent) error {
 		return apis.NewBadRequestError("WeChat credentials not configured", nil)
 	}
 
-	config := wechat.WechatConfig{
+	config := wechat.WeChatConfig{
 		AppID:     appID,
 		AppSecret: appSecret,
 	}

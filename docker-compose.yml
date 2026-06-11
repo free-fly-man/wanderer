@@ -2,7 +2,7 @@ version: '3'
 
 x-common-env: &cenv
   MEILI_URL: http://search:7700
-  MEILI_MASTER_KEY: vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo
+  MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-vODkljPcfFANYNepCHyDyGjzAMPcdHnrb6X5KyXQPWo}
 
 services:
   search:
@@ -32,8 +32,12 @@ services:
         condition: service_healthy
     environment:
       <<: *cenv
-      POCKETBASE_ENCRYPTION_KEY: fde406459dc1f6ca6f348e1f44a9a2af
-      ORIGIN: http://localhost:3000
+      POCKETBASE_ENCRYPTION_KEY: ${POCKETBASE_ENCRYPTION_KEY:-fde406459dc1f6ca6f348e1f44a9a2af}
+      ORIGIN: ${ORIGIN:-http://localhost:3000}
+      # WeChat OAuth Configuration
+      WECHAT_APP_ID: ${WECHAT_APP_ID:-}
+      WECHAT_APP_SECRET: ${WECHAT_APP_SECRET:-}
+      WECHAT_REDIRECT_URI: ${WECHAT_REDIRECT_URI:-}
     ports:
       - "8090:8090"
     networks:
@@ -57,18 +61,18 @@ services:
         condition: service_healthy
     environment:
       <<: *cenv
-      ORIGIN: http://localhost:3000
+      ORIGIN: ${ORIGIN:-http://localhost:3000}
       BODY_SIZE_LIMIT: Infinity
       PUBLIC_POCKETBASE_URL: http://db:8090
-      PUBLIC_DISABLE_SIGNUP: "false"
+      PUBLIC_DISABLE_SIGNUP: "${PUBLIC_DISABLE_SIGNUP:-false}"
       UPLOAD_FOLDER: /app/uploads
-      UPLOAD_USER:
-      AMAP_KEY: b5279fea2eaa266c9f3ea453811ba7e
-      UPLOAD_PASSWORD:
+      UPLOAD_USER: ${UPLOAD_USER:-}
+      AMAP_KEY: ${AMAP_KEY:-b5279fea2eaa266c9f3ea453811ba7e}
+      UPLOAD_PASSWORD: ${UPLOAD_PASSWORD:-}
       OVERPASS_API_URL: https://overpass-api.de
       VALHALLA_URL: https://valhalla1.openstreetmap.de
       NOMINATIM_URL: https://nominatim.openstreetmap.org
-      PUBLIC_MAP_MAX_POLYLINES: 100
+      PUBLIC_MAP_MAX_POLYLINES: ${PUBLIC_MAP_MAX_POLYLINES:-100}
     volumes:
       - ./data/uploads:/app/uploads
       # - ./data/about.md:/app/build/client/md/about.md
